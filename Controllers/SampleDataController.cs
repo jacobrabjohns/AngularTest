@@ -16,9 +16,9 @@ namespace AngularTest.Controllers
         }
 
         [HttpGet("[action]")]
-        public async Task<IEnumerable<WeatherForecast>> WeatherForecasts()
+        public async Task<IActionResult> WeatherForecasts()
         {
-            return await _weatherSevice.GetForecasts();
+            return Ok(await _weatherSevice.GetForecasts());
         }
     }
 }
