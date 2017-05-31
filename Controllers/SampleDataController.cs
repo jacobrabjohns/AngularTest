@@ -9,17 +9,17 @@ namespace WebApplicationBasic.Controllers
     [Route("api/[controller]")]
     public class SampleDataController : Controller
     {
-        private readonly WeatherContext _context;
+        private readonly IWeatherSevice _weatherSevice;
 
-        public SampleDataController(WeatherContext context)
+        public SampleDataController(IWeatherSevice weatherSevice)
         {
-            _context = context;
+            _weatherSevice = weatherSevice;
         }
 
         [HttpGet("[action]")]
         public async Task<IEnumerable<WeatherForecast>> WeatherForecasts()
         {
-            return await _context.WeatherForecasts.ToListAsync();
+            return await _weatherSevice.GetForecasts();
         }
     }
 }

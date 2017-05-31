@@ -8,7 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
-namespace WebApplicationBasic
+namespace AngularTest
 {
     public class Startup
     {
@@ -33,6 +33,7 @@ namespace WebApplicationBasic
             // Add framework services.
             services.AddMvc();
             services.AddDbContext<WeatherContext>(options => options.UseSqlServer(ConnectionString));
+            services.AddTransient<IWeatherSevice, WeatherSevice>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
