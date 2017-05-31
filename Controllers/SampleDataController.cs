@@ -2,9 +2,8 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using DataAccess;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
-namespace WebApplicationBasic.Controllers
+namespace AngularTest.Controllers
 {
     [Route("api/[controller]")]
     public class SampleDataController : Controller

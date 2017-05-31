@@ -1,8 +1,7 @@
 using System.IO;
-using AngularTest;
 using Microsoft.AspNetCore.Hosting;
 
-namespace WebApplicationBasic
+namespace AngularTest
 {
     public class Program
     {

@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 
-namespace WebApplicationBasic.Controllers
+namespace AngularTest.Controllers
 {
     public class HomeController : Controller
     {
