@@ -1,5 +1,5 @@
 {
-  "name": "WebApplicationBasic",
+  "name": "angular-test",
   "version": "0.0.0",
   "scripts": {
     "test": "karma start ClientApp/test/karma.conf.js"
