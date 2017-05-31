@@ -1,10 +1,9 @@
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
+using DataAccess;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.SpaServices.Webpack;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -13,6 +12,8 @@ namespace WebApplicationBasic
 {
     public class Startup
     {
+        private const string ConnectionString = @"ChangeMe";
+
         public Startup(IHostingEnvironment env)
         {
             var builder = new ConfigurationBuilder()
@@ -21,6 +22,7 @@ namespace WebApplicationBasic
                 .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
                 .AddEnvironmentVariables();
             Configuration = builder.Build();
+
         }
 
         public IConfigurationRoot Configuration { get; }
@@ -30,11 +32,13 @@ namespace WebApplicationBasic
         {
             // Add framework services.
             services.AddMvc();
+            services.AddDbContext<WeatherContext>(options => options.UseSqlServer(ConnectionString));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, WeatherContext context)
         {
+            AddStartupData(context);
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
 
@@ -62,6 +66,20 @@ namespace WebApplicationBasic
                     name: "spa-fallback",
                     defaults: new { controller = "Home", action = "Index" });
             });
+        }
+
+
+        private void AddStartupData(WeatherContext context)
+        {
+            if (!context.WeatherForecasts.Any())
+            {
+                context.WeatherForecasts.Add(
+                    new WeatherForecast
+                    {
+                        DateFormatted = "Today", Summary = "Warm", TemperatureC = 25
+                    });
+                context.SaveChanges();
+            }
         }
     }
 }
